@@ -1,0 +1,33 @@
+body{
+    text-align: center;
+    background-image:url(./Fondo.jpg) ;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    border: 5px solid gray;
+}
+
+td,th {
+   border: 2px  solid black;
+    text-align: center;
+    padding: 0 auto;
+
+}
+th {
+    color:blue;
+}
+a {
+    color: black;
+
+}
+
+a:hover{
+    color: blueviolet;
+}
+a:visited {
+    color: yellow;
+}
