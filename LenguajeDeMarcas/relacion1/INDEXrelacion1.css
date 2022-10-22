@@ -1,0 +1,23 @@
+body{
+    background-color: black;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    color: turquoise;
+}
+a:visited {
+    color: yellow;
+}
