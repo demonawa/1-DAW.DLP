@@ -1,0 +1,25 @@
+body{
+    text-align: center;
+    background-color: black;
+    font: 1.05em sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1{
+    color: #FF0000;
+}
+a {
+    color:  #00FF66;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #CC00FF;
+
+}
+a:visited {
+    color: #FFFF33;
+}
+
+ul {
+    list-style: none;
+}

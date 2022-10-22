@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio3-Rel3</title>
+</head>
+<body>
+    <legend>FORMULARIO DE REGISTRO</legend>
+    <form>
+
+        <label for="NOM">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" placeholder="" size="30"/> 
+        <legend>Sexo:</legend>
+
+        <input type="radio" id="Hombre" name="Sexo" value="Hombre">
+        <label for="Hombre">Hombre</label><br>
+        <input type="radio" id="Mujer" name="Sexo" value="Mujer">
+        <label for="Mujer">Mujer</label><br>
+        <label for="user">Usuario:</label>
+        <input type="text" name="nombre" id="user" placeholder="" size="15"/> 
+
+        <legend>Aficiones:</legend>
+
+        <input type="checkbox" id="af1" name="af1" value="KDE">
+        <label for="af1"> Viajar</label><br>
+
+        <input type="checkbox" id="af2" name="af2" value="KDE">
+        <label for="af2"> Cine</label><br>
+
+        <input type="checkbox" id="af3" name="af3" value="KDE">
+        <label for="af3"> Deportes</label><br>
+
+        <input type="checkbox" id="af4" name="af4" value="KDE">
+        <label for="af4"> Leer</label><br>
+
+        <input type="checkbox" id="af5" name="af5" value="KDE">
+        <label for="af5"> Música</label><br>
+        <br>
+        <label for="ctr">Contraseña:</label>
+        <input type="text" name="ctr" id="ctr" placeholder="" size="45"/> 
+
+        <br>
+        <br>
+        <label for="Provincia">Provincia</label>
+  <input list="Provincia" name="Provincia" id="pro">
+  
+  <datalist id="Provincia">
+    <option value="A Coruña"></option>
+    <option value="Andalucía"></option>
+    <option value="Cataluña"></option>
+    <option value="Melilla"></option>
+    <option value="Pais Vasco"></option>
+    </datalist> 
+<br>
+<br>
+<label for="comen">Firma</label>
+        <textarea id="comen" name="w3review"
+        rows="4" cols="50"
+        placeholder=""
+        itemid="comen"></textarea>
+
+        <br>
+        <br>
+        <label for="file">Foto</label><input type="file" value="Seleccionar archivo"/>
+        <br>
+        <br>
+<input type="submit" value="Enviar"/>
+       <input type="reset" value="Borrar"/> 
+
+    </form>
+</body>
+</html>
