@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="ejer4.css"/>
+    <title>Ejemplos de formularios 1</title>
+    <title>Ejer4-Rel3</title>
+</head>
+<body>
+    <form>
+    <table>
+        <tr>
+            <th colspan="10" >Formulario de registro</th>
+        </tr>
+        <tr>
+            <td class="izquierda" ><label for="nombre">Nombre</label></td>
+            <td colspan="5" class="contenido">
+                <input type="text" name="nombre" id="nombre" placeholder="" size="20"/> </td>
+                <td  class="contenido">Sexo</td>
+                <td class="contenido">
+                    <label for="Hombre">Hombre</label>
+                    <input type="radio" id="Hombre" name="Sexo" value="Hombre">
+
+                </td>
+         <td class="contenido">  
+            <label for="Mujer">Mujer</label>
+            <input type="radio" id="Mujer" name="Sexo" value="Mujer"></td>
+        </tr>
+
+        <tr>
+            <td class="izquierda"><label for="user">Usuario</label></td>
+             
+                <td colspan="5" class="contenido" >
+                <input type="text" name="nombre" id="user" placeholder="" size="20"/> 
+                <td colspan="4" rowspan="5" > <legend>Aficiones</legend>
+
+                    <input type="checkbox" id="af1" name="af1" value="KDE">
+                    <label for="af1"> Viajar</label><br>
+            
+                    <input type="checkbox" id="af2" name="af2" value="KDE">
+                    <label for="af2"> Cine</label><br>
+            
+                    <input type="checkbox" id="af3" name="af3" value="KDE">
+                    <label for="af3"> Deportes</label><br>
+            
+                    <input type="checkbox" id="af4" name="af4" value="KDE">
+                    <label for="af4"> Leer</label><br>
+            
+                    <input type="checkbox" id="af5" name="af5" value="KDE">
+                    <label for="af5"> Música</label><br></td>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="izquierda"><label for="cont">Contraseña</label></td>
+                <td colspan="5" class="contenido" >
+                <input type="text" name="nombre" id="cont" placeholder="" size="20"/> 
+            </td>
+
+        <tr>
+            <td class="izquierda" ><label for="prov">Provincias</label></td>
+                <td class="contenido">
+                <input list="Provincia" name="Provincia" id="pro">
+  
+                <datalist id="Provincia">
+                  <option value="A Coruña"></option>
+                  <option value="Andalucía"></option>
+                  <option value="Cataluña"></option>
+                  <option value="Melilla"></option>
+                  <option value="Pais Vasco"></option>
+                  </datalist> 
+            </td>
+        </tr>
+        <tr>
+            <td class="izquierda"><label for="file">Foto</label></td>
+                <td class="cotenido"><input type="file" value="Seleccionar archivo"/>
+                    </td>
+
+        </tr>
+        
+        <tr>
+            <td class="izquierda"><label for="comen">Firma</label></td> 
+                  <td class="contenido" > <textarea id="comen" name="w3review"
+                    rows="4" cols="50"
+                    placeholder=""
+                    itemid="comen"></textarea></td>
+
+
+        </tr>
+
+        <tr>
+            <td colspan="10" class="contenido"><input type="submit" value="Enviar"/>
+                <input type="reset" value="Borrar"/> </td>
+
+
+        </tr>
+
+
+        </tr>
+    </table>
+</form>
+</body>
+</html>
