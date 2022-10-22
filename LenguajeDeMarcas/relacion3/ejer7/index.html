@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+       <title>Ejercicio7-Rel3</title>
+	   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	   <link rel="stylesheet" href="estilos.css" type="text/css">
+	</head>
+	
+	<body>
+		
+		
+		<br/>
+		
+		<form action="practicaformularios.php" method="POST">
+		
+			<fieldset class="primero">
+			
+			
+			<br/>
+			
+			<fieldset class="segundo">
+				<legend>Hobbies</legend>
+				
+				<br/><br/>
+				
+				<label for="componentes">Seleccione los componentes electrónicos que usas:</label>
+				<select name="componentes">
+					<optgroup>
+					<option value="movil">Móvil</option>
+					<option value="tablet">Tablet</option>
+					<option value="ordenador">Ordenador</option>
+					<option value="ebook">Ebook</option>
+					<option value="portatil">Portatil</option>
+				</optgroup>
+				</select>
+				
+				<br/><br/>
+				
+				<label for="actividades">Seleccione sus actividades favoritas:</label>
+				<table>
+					<tr>
+						<td><input type="checkbox" name="actividades"/>Hacer deporte</td>
+						<td><input type="checkbox" name="actividades"/>Salir con amigos</td>
+						<td><input type="checkbox" name="actividades"/>Ver series, pelis, ...</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="actividades"/>Realizar rutas de senderismo</td>
+						<td><input type="checkbox" name="actividades"/>Ir al cine</td>
+						<td><input type="checkbox" name="actividades"/>Escuchar música</td>
+					</tr>
+				</table>
+				
+				<br/>
+				
+				<label for="texto">Explica brevemente que es lo que te gusta hacer en tu tiempo libre:</label>
+				
+				<br/>
+				
+				<textarea rows="4" cols="65" name="texto"></textarea>
+				
+				<br/>
+				
+				<label for="pelifav">Elige o escribe tu peli favorita:</label>
+				<input type="text" id="pelifav" name="pelifav" list="listaPelis"/>
+				<datalist id="pelifav1">
+					<option id="Mulan" value="Mulan">Mulan</option>
+					<option id="Valiant" value="Valiant">Valiant</option>
+					<option id="Harry Potter" value="Harry Potter">Harry Potter</option>
+					<option id="Amigos" value="Amigos">Amigos</option>
+				</datalist>
+			</fieldset>
+			
+			<br/>
+			
+			<p>
+				<input type="submit" value="Enviar"/>
+				<input type="reset" value="Cancelar"/>
+			</p>
+			
+			<br/>
+		</fieldset>
+		</form>	
+
+	</body>
+</html>

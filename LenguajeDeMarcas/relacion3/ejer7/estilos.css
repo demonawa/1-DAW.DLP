@@ -1,0 +1,51 @@
+p, h2  {text-align: center;
+}
+
+h2 {
+	width: 50%;
+	color: #665029;
+	font-style: italic;
+	text-shadow: #F9C05C 3px 3px 3px;
+}
+
+fieldset {
+	width: 50%;
+	border-radius: 40px 0px 40px 0px;
+	border-width: 0px;
+}
+
+fieldset:first-child {
+	background-color: #CB9D4C;
+	box-shadow: #F9C05C 15px 15px 15px;	
+}
+
+fieldset:nth-of-type(2) {
+	background-color: #F9C05C;
+	box-shadow: #CB9D4C 15px 15px 15px;
+}
+
+legend {text-align: right;
+		position: relative;
+		top: 10px;
+		width: 30%;
+		background-color: transparent;
+		margin-bottom: 20px;
+		font-style: oblique;
+}
+
+th {text-align: right;
+}
+
+input[type="submit"], input[type="reset"] {
+	width: 20%;
+	font-weight: bold;
+	color: white;
+	padding: 10px 0;
+	background-color: #665029;
+	border-radius: 30px;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+	background-color: #CB9D4C;
+	color:black;
+}
