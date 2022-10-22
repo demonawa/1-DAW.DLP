@@ -1,0 +1,870 @@
+/*04/10/2022*/
+
+/*Selecciona todos los campoos de la tabla CLIENTES*/
+select * from CLIENTES;
+
+/*Proyectamos el nomnbre y la direccion de clientes*/
+select nombre, direccion from CLIENTES;
+
+/*Proyectar en LIBROS el título y el autor*/
+select * from libros;
+select titulo, autor from LIBROS;
+
+/*
+Nombre Campos;
+Autor, se puede poner [Tabla]AUTOR
+ej: LIBROS.AUTOR
+ */
+ /*ID_LIBRO, fecha_lanzamiento y fecha_cierre*/
+ select ID_LIBRO, FECHA_lanzamiento, fecha_cierre from LIBROS;
+ 
+ /* listar la tabla libros renombrandola a titulos_gestionados*/
+ select * from LIBROS as titulos_gestionados;
+ 
+ /* sobre el ejericicio anterior sustituyendo el alias por t_g proyectar id y titulo con el prefijo del nombre de la tabla delante*/
+ select t_g.ID_LIBRO, t_g.TITULO from LIBROS as T_G;
+ 
+ /* sobre el ejercicio anteirior renombrar id_libro como id y titulo con titulo_libro*/
+  select t_g.ID_LIBRO as id, t_g.TITULO as titulo_libro from LIBROS as T_G;
+
+/* vamos a seleccionar los clientes de antequera */
+select * from CLIENTES where poblacion='Antequera' ;
+
+/* primero selecciona y luego proyecta
+consultar los nombres de los clientes que son de Antequera
+*/
+select nombre from CLIENTES where poblacion='Antequera';
+
+/* Primero selecciona y luego proyecta consultar los nombres de los clientes de Antequera o que cuyo nombre este detrás de la J */
+select nombre from clientes where poblacion = 'Antequera' or nombre >= 'J';
+
+/* nombre de los alumnos Antequeranos y cuyo nombre empiece por la letra C */
+select nombre from clientes where poblacion = 'Antequera' and nombre >= 'C' and nombre < 'D';
+
+/* Datos completos de los pedidos cuyo importe [5,10]€*/
+select * from pedidos where importe >=5 and importe <=10;
+/*select importe from pedidos where importe >=5 and importe <=10;*/
+
+/* Se puedem mostrar en las columnas expresiones de todo tipo matemáticas, de caracteres, etc*/
+
+/*en pedidos puedes mostrar la descripcion , importe, y un total que es el importe más el 21% de iva y además el iva*/
+/* x + x * 0.21 = x*(1+0.21)=x*1.21*/
+select descripcion, importe, importe * 0.21 as IVA , importe * 1.21 as IMPORTE_TOTAL  from pedidos;
+
+/* Sacar una constante o expresion por la pantalla*/
+select 'hola mundo' from pedidos; /*esto saca en cada pedido un hola mundo*/
+/*como hacer que solo saque un hola mundo*/
+select 'hola mundo' mensaje_inicial, 23 numero from RDB$DATABASE; /*esta es la base de datos del sistema*/
+
+/*delete from LIBRERIAS where ID_LIBRERIA = 1;*/ /*no funciona y no sé pq*/
+
+/*pruebas de variables de entorno*/
+/*mostrar la fecha actual*/
+select current_date as fecha_hoy, current_connection as conexion_actual,
+ current_role as rol_actual, current_time as hora_actual, current_timestamp as fecha_hora_actual,
+ current_transaction as numero_transacciones, current_user as usuario_actual,
+ user usuario_libreria_cliente
+ from RDB$DATABASE;
+ 
+/*cadena de predefinida*/
+
+select CAST('NOW' as DATE) fecha_actual,
+    CAST('2022-10-04' as DATE) fecha_actual_constante,
+    CAST('NOW' as TIME) hora_actual,
+    CAST('NOW' as TIMESTAMP) fecha_hora_actual
+ from RDB$DATABASE;
+ 
+ /*prueba de ayer y de mañana*/
+ select cast ('today' as date) as hoy,
+CAST('yesterday' as date) as ayer,
+CAST('tomorrow'as date) as manyana,
+from RDB$DATABASE;
+
+/*lo mismo con current date*/
+select current_Date as hoy,
+current_date - 1 as ayer,
+ current_date + 1 as manyana,
+ from RDB$DATABASE;
+
+/*07/10/2022*/
+
+(OR)
+FN N
+NF N
+VN N
+NV V
+NN V
+
+(AND)
+NF F
+FN F
+NV N
+VN N
+NN N
+
+select null or 4 > 6 expression
+from RDB$DATABASE;
+
+select null or 6>4null_or_V
+from RDB$DATABASE;
+
+select null or 4>6 null_or_F
+from RDB$DATABASE;
+
+/*Prueba de null or False*/
+select null or false
+from RDB$DATABASE;
+
+select coalesce (null or false, 'Es nulo')
+from RDB$DATABASE;
+
+/*prueba con nulo y true*/
+select null or true
+from RDB$DATABASE;
+
+select coalesce (null or true,'Es nulo')
+from RDB$DATABASE;
+
+/*Prueba con nulo and false*/
+select null and false
+from RDB$DATABASE;
+
+/*prueba con null and true*/
+select null and true
+from RDB$DATABASE;
+
+select descripcion, gastos_envio
+from PEDIDOS
+where gastos_envio = 3;
+
+/*ejemplo null en pedidos*/
+
+*sacar los pedidos que no tienen gastos de envio, en este caso a null*/
+
+select * from pedidos where gastos_envio is null;
+
+*pruebas con enteros*/
+
+select cast (5000 as smallint),cast (15000 as smallint)
+,cast (25000 as smallint)
+--,cast (35000 as smallint) solo te permite hasta 32767
+from RDB$DATABASE;
+
+/*pruebas con entero*/
+select cast (100000 as integer),cast(1000000 as integer)
+,cast(10000000 as integer)
+,cast(10000000 as integer)
+,cast(100000000 as integer)
+,cast(1000000000 as integer)
+--,cast(10000000000 as integer) solo llega hasta 2,147,483,647
+from RDB$DATABASE;
+/*pruebas con decimales y numerico*/
+select cast (12.34 as DECIMAL(3,1)),
+        cast (12.35 as DECIMAL (3,1)),
+        cast (21122.35 as DECIMAL (3,1)),
+        cast (87654321.35 as DECIMAL (3,2))
+        from RDB$DATABASE;
+      
+/*pruebas con numeric*/
+
+select cast (12.34 as numeric(3,1)),
+        cast (12.35 as numeric (3,1)),
+        cast (122.35 as numeric (3,3))
+       -- cast (87654321.35 as numeric (3,2)) --numeric y decimal tienen el mismo comportamiento
+        from RDB$DATABASE;
+
+select cast (12.34 as numeric(3,1)),
+        cast (12.35 as numeric (3,1)),
+        cast (122.35 as numeric (3,2))
+       /*cast (87654321.35 as numeric (3,2)) --numeric y decimal tienen el mismo comportamiento*/
+        from RDB$DATABASE;
+        
+/*prueba fechas*/
+select cast ('1492-10-12' as date),
+cast ('1492-10-12' as date) + 5000 fecha_descub
+from RDB$DATABASE;
+
+/*prueba con la hora*/
+select cast ('02:39:25' as TIME),
+cast ('02:39:25' as TIME) + 20 * 60
+from RDB$DATABASE;
+
+/*prueba fecha hora tiemstamp*/
+
+/*11/10/2022*/
+
+/*Ejemplo día que nací*/
+
+select EXTRACT (WEEKDAY from cast ('2004-04-08'as DATE)) fechaNacimiento
+from RDB$DATABASE;
+
+/*dia de de aqui a 30 dias*/
+
+select EXTRACT (weekday from current_Date + 30) as a30Dias,
+current_date
+from RDB$DATABASE;
+
+/*sacar la hora actual de dos formas*/
+select extract (hour from current_time) as horaActual,
+        extract (hour from current_timestamp) as horaActual2,
+        extract (hour from cast('NOW'as timestamp)) as horaActual3,
+        extract (hour from cast('NOW'as timestamp)) as horaActual3
+from RDB$DATABASE;
+
+/*sabiendo que || une cadena de caracteres sacar la fecha actual como año:2022 nes:10 dia:11*/
+select 'Dia: ' || extract (day from current_date)  ||
+'Mes: ' || extract (month from current_date) ||
+'Anyo: ' ||extract  (year from current_date) as fecha
+from RDB$DATABASE;
+
+
+/*sacar la hora actual con formato:
+HH nn SS*/
+select extract (hour from current_time) ||
+extract (minute from current_time) ||
+extract (second from current_time)
+from RDB$DATABASE;
+
+select extract (hour from current_time) || 'h '||
+extract (minute from current_time) ||''' '||
+extract (second from current_time) ||''''''
+from RDB$DATABASE;
+
+/*diferencias fundamental entre char y varchar*/
+select cast ('hola' as char(10)) || '---' tipoChar,
+        cast ('hola' as varchar(10)) || '---' tipoChar2
+from RDB$DATABASE;
+
+/*hay errores en ambos tipos si usamos cadenas mayores del tamaño permitido*/
+select cast ('0123456789-'as char(10))
+from RDB$DATABASE;
+
+/*prueba de caracter set*/
+select cast ('niño' as character(10)character set ISO8859_1)
+from RDB$DATABASE;
+
+/*pruebas nulo*/
+select unknown
+from rbd$database; /*no funciona pq enrique no sabe hacerlo*/
+
+/*prueba is not true*/
+select (3>4) is true,
+        (3>4) is false ,
+        (3>4) is not true,
+        (3>4) is not false,
+        3>4) = true,
+        3>4) = false,
+        3>4) <> true,
+        3>4) <> false
+from RDB$DATABASE;
+
+/*clientes not (poblacion = 'Antequera')*/
+select *
+from clientes where not poblacion ='Antequera';
+/*es equivalente a*/
+select *
+from clientes where poblacion <>'Antequera';
+
+
+
+
+
+
+
+
+not
+=
+<>
+>
+<
+>=
+<=
+
+como queda
+<>
+=
+<=
+>=
+<
+>
+
+/*concatenacion con char*/
+select cast ('hola' as char(20)) || cast ('hola' as char(20)),
+cast ('hola' as varchar(20)) || cast ('hola' as varchar(20))
+from RDB$DATABASE;
+
+select cast ('hola' as char(20)) || cast ('hola' as char(20)),
+cast ('hola' as varchar(20)) || cast ('hola' as varchar(20)),
+'hola' || 27, ← junta hola con 27
+'hola' || (27 + 3) ← unta hola con 30
+from RDB$DATABASE;
+
+/*operadores aritméticos unarios*/
+select +4,
+       -3,
+       +(8-10),
+       -(8-10)
+from RDB$DATABASE;
+
+select (5>6),
+       (5>4),
+       (5!<6),
+       (5!<4)       
+from RDB$DATABASE;
+
+/*ejemplo between libros cuyo precio esté comprendido entre [4,7]*/
+select *
+from libros
+where precio between 4 and 7;
+
+/*cuyo precio no esté entre [4,7]*/
+select *
+from libros
+where not (precio between 4 and 7);
+
+select *
+from libros
+where precio not between 4 and 7;
+
+/*Se puede hacer de las 2 maneras*/
+
+
+/*valor pertenece a una lista o resultado de un select especifito para cliente de 'Antequera' o  'Malaga'*/
+select *
+from CLIENTES
+where poblacion ='Antequera' or poblacion='Malaga';
+
+/*operador in con lista*/
+select *
+from CLIENTES where poblacion in ('Antequera','Malaga');
+
+/*el operador un lleva un not incorporado*/
+select *
+from CLIENTES where poblacion not in ('Antequera','Malaga');
+
+
+/*Clientes cuyo telefono empiece por 12, prueba de LIKE*/
+select *
+from clientes
+where telefono like '12%'; /*% quiere decir cualquier cosa*/
+
+/*clientes que vivan en una calle que tenga la letra E*/
+select *
+from CLIENTES
+where poblacion like '%e%'; /*cuando contiene e se pone entre %*/
+
+/*clientes que vivan en una calle que tenga la letra E*/
+select *
+from CLIENTES
+where direccion like '%E%';
+
+/*comprobar si enrique mora moral tiene una 'E'*/
+select 'enrique mora moral' like '%E%',
+'Enrique mora moral' like '%E%'
+from RDB$DATABASE;
+
+/*comprobar en un nombre que el ultimo sea Moral*/
+select 'Enrque Mora Moral' like '%Moral'as casoV ,
+'Enrque Moral Morente' like '%Moral' as casoF
+from RDB$DATABASE;
+
+/*que contenga palabras al estilo m(unCaracter)(rUncaracter)l*/
+select 'camiro' like '%m_r_l%' as fallo1,
+        'camirol' like '%m_r_l%' as acierta1
+from RDB$DATABASE;
+/*que contenga palabras al estilo m(unCaracter)(rUncaracter)l y que no acabe en este texto:  */
+select 'camiro' like '%m_r_l%' as fallo1,
+        'camirol' like '%m_r_l%' as fallo2,
+        'camirol se va de paseo' like'%m_r_l%' as fallo3
+from RDB$DATABASE;
+
+
+
+/*correro electronico algo@algo.algo*/
+
+select 'asdfsa@dfasdf.es' like '%@%.%',
+        'fdsafdsa.es' like '%@%.%',
+        '@.wadwa.fds.fdsa' like '%@%.%'
+from RDB$DATABASE;
+
+/*candeas que terminen en un %*/
+select '12%' like '%\%' escape '\',
+'12' like '%\%' escape '\',
+'' like '%%' escape '\'
+from RDB$DATABASE;
+
+
+/*14/10/2022*/
+
+/*prueba de between para dos fechas*/
+
+select cast ('2022-10-14'as DATE) between cast('2022-10-01'as DATE) AND
+                                          cast('2022-10-31'as DATE),
+    cast ('2022-09-01'as DATE) between cast('2022-10-01'as DATE) AND
+                                       cast('2022-10-31'as DATE)
+from RDB$DATABASE;
+
+/*pedidos de este año*/
+select*
+from pedidos where fecha between cast('2010-01-01'as DATE) AND
+                                 cast('2010-12-31'as DATE);
+
+/*prueba containing y starting with*/
+select 'Antonio' containing 'ton',
+        'Antonio' starting with 'ton',
+        'Antonio' containing 'ant',
+        'Antonio' starting with 'Ant',
+        'Antonio' like 'ant%'
+from RDB$DATABASE;
+
+
+/*prueba de CASE con elemento que codifica las 8 provincias andaluzas */
+    select CASE 4
+        when 1 then 'Almería'
+        when 2 then 'Cadiz'
+        when 3 then 'Cordoba'
+        when 4 then 'Granada'
+        when 5 then 'Huelva'
+        when 6 then 'Jaen'
+        when 7 then 'Malaga'
+        when 8 then 'Sevilla'
+        else 'Provincia no valida'              
+        end as provincia
+from RDB$DATABASE;
+
+/*vamos a suponer que el importe en pedidos es la provincia,sacar
+la descripcion y la provincia del pedido*/
+select descripcion,
+        importe,
+        case importe
+        when 1 then 'Almería'
+        when 2 then 'Cadiz'
+        when 3 then 'Cordoba'
+        when 4 then 'Granada'
+        when 5 then 'Huelva'
+        when 6 then 'Jaen'
+        when 7 then 'Malaga'
+        when 8 then 'Sevilla'
+        when null then 'nulo'
+        else 'Provincia no valida'              
+        end as provincia
+from PEDIDOS;
+
+/*en pedidos codificar el importe segun la siguiente tabla*/
+/*<0 negativos
+<=3 baratos
+<=6 normal
+resto o <6 caros*/
+select descripcion,
+        importe,
+        case
+        when importe <0 then 'negativos'
+        /*el importe es >=0 and importe <=3*/
+        when importe <=3 then 'baratos'
+        /*importe >3 and importe <=6*/
+        when importe <=6 then 'normal'
+       /* else 'caros'*/
+       when importe > 6 then 'caros'
+       /**/
+       else 'valor imposible'
+        end as provincia
+from PEDIDOS;
+
+/*ejemplo notas*/
+/*numero decimal(4,2)
+>=0 y <5 insu
+>=5 y <6 suficiente
+>=6 y <7,5 bien
+>=7.5 y <8.5 notable
+>=8.5 y <10 sobresaliente*/
+
+select case
+        when nota < 0 then 'nota erronea'
+        when nota < 5 then 'insuficiente'
+        when nota <6 then 'suficiente'
+        when nota <7.5 then 'bien'
+        when nota <8.5 then 'notable'
+        when nota < 10 then 'sobresaliente'
+        else 'nota erronea'
+        end nota
+        from RDB$DATABASE;
+        
+/*ejemplo sacar el dia de la semana de la fecha actuan en castellano*/
+/*poner curren_date y sale viernes*/
+select FECHA,
+       case extract(weekday from current_date)
+        when 0 then 'Domingo'
+       when 1 then 'Lunes'
+       when 2 then 'Martes'
+       when 3 then 'Miercoles'
+       when 4 then 'Jueves'
+       when 5 then 'Viernes'
+       when 6 then 'Sábado'
+       end dia_semana
+from PEDIDOS;
+        
+/*coalesce en gastos_envio*/
+/*sustituir los nulos por ceros*/
+select pedidos.*, coalesce (gastos_envio,0)
+from PEDIDOS;
+
+/*sacar en pedidos todos los datos mas el importe total
+que es la suma del importe + los gastos de envio
+ */
+select pedidos.*,
+        importe + coalesce(gastos_envio,0) as importe_total
+from PEDIDOS;
+ 
+/*suponeos que archidona es el valor nulo*/
+select poblacion
+nullif (poblacion,’Archidona’)
+from clientes;
+/*17/10/2022*/
+
+/*select case extract(weekday from current_date)
+    when 0 then 'Domingo'
+       when 1 then 'Lunes'
+       when 2 then 'Martes'
+       when 3 then 'Miercoles'
+       when 4 then 'Jueves'
+       when 5 then 'Viernes'
+       when 6 then 'Sábado'
+       end dia_semana
+
+    from RDB$DATABASE;*/
+
+/*select decode (extract (weekday from current_date - 1),
+        0,  'Domingo',
+        1,  'Lunes',
+        2,  'Martes',
+        3,  'Miercoles',
+        4,  'Jueves',
+        5,  'Viernes',
+        6,  'Sábado',
+       'Error') as dia_semana
+    from RDB$DATABASE;*/
+
+ /*PAR o IMPAR*/   
+/*select iif (mod(3,2)=0, 'par', 'impar')con3,
+       iif (mod(8,2)=0, 'par', 'impar')con8
+    from RDB$DATABASE*/
+    
+/*Separar positivos-negativos y pares-impares*/
+select iif(8<0,iif(mod (8,2)=0,'negativo y par', 'negativo  impar'),
+               iif (mod(8,2)=0, 'positivo y par' , 'positivo impar'))
+FROM RDB$DATABASE;
+
+
+
+select ID_PEDIDO, descripcion,importe,
+    iif(importe>=7, ‘caro’,’barato’) as valoracion 
+from pedidos;
+
+select gen_Uuid(),
+    gen_uuid(),
+    gen_uuid()
+from rdb$database;
+
+
+
+/*18/10/2022*/
+
+/*prueba funciones matemáticas*/
+select ABS(5),ABS(-5),
+       ACOS(0.5) as arcos05
+from RDB$DATABASE;
+
+/*Prueba de las funciones en binario poco uso*/
+select BIN_AND(255,8), /*la funcion va de 0 a 255, la funcion hace el binario */
+       BIN_OR(5,8),
+       BIN_XOR(5,8),
+       BIN_NOT(8), /*Va de 0 a 128*/
+       BIN_SHL(5,2), /*Mueve hacia la izquierda el numero en binario*/
+       BIN_SHR(5,2)/*Mueve hacia la derecha el numero en binario*/
+from RDB$DATABASE;
+
+/*CEIL,FLOOR Y ROUND importantes*/
+select CEIl(5.34),
+       CEIL(5.5),
+       CEIL(5.8),
+       CEIl(-5.34),
+       CEIL(-5.5),
+       CEIL(-5.8)
+from RDB$DATABASE;
+
+/*Ceil a dos cifras es decir 5.5618 lo saque a 5.57*/
+
+/*Probamos con 5.5618 y 5.5681*/
+select cast (ceiling(5.5618*100.0)as decimal(7,2))
+            / cast (100 as decimal(7,2)),
+      cast (ceiling(5.5681*100.0) as decimal(7,2))
+            / cast(100 as decimal(7,2))
+from RDB$DATABASE;
+
+select cast (floor(5.5618*100.0)as decimal(7,2))
+            / cast (100 as decimal(7,2)),
+      cast (floor(5.5681*100.0) as decimal(7,2))
+            / cast(100 as decimal(7,2))
+from RDB$DATABASE;
+
+/*ejemplo round*/
+select round (5.5618, 2),
+        round (5.5681, 2)
+from RDB$DATABASE;     
+
+/*ejemplo de resto*/
+select mod (17,3) as mod17_7
+from RDB$DATABASE;
+        
+/*power y rand y sign*/
+select power(2,3) as dos_al_cubo,
+       RAND()*100 numero_aleatorio_enre0_100,
+       sign(-8) as negativo,
+       sign(8) as positivo,
+       sign(0) as cero
+from RDB$DATABASE;
+
+/*simular sign con iif
+if numero<0
+    -1
+else if numero=0
+
+0
+else 1
+*/
+select iif(-8<0,-1,iif(-8=0,0,1))
+from RDB$DATABASE;
+
+/*probar los gastos de envio*/
+select gastos_envio,
+       sign(gastos_envio),
+       iif (gastos_envio<0,-1,iif(gastos_envio=0,0,1)),
+       iif (gastos_envio<0,0,iif(gastos_envio=0,1,-1))
+from PEDIDOS;
+ 
+/*prueba de sqrt y trunc*/
+select sqrt(4),sqrt(9),sqrt(428), /* error sqrt(-12)*/
+       trunc(123.456,2), trunc(123.456,-2),
+       trunc(123456.879,-3)
+from RDB$DATABASE;     
+
+ /*prueba ascii_char*/
+select ascii_char(73),/*Que quieres pasar a valor*/
+       ascii_VAL('I'), /*Que quieres pasar a valor*/
+       ascii_VAL('Ñ'),
+       ascii_char(209)
+from RDB$DATABASE;
+
+/*prueba ascii_char*/
+select ascii_char(73),/*Que quieres pasar a valor*/
+       ascii_VAL('I'), /*Que quieres pasar a valor*/
+       ascii_VAL('Ñ'),
+       ascii_char(209)
+from RDB$DATABASE;
+
+/*char_length*/
+select char_length('hola'),
+       char_length(cast('hola' as varChar(10))),
+       char_length(cast('hola' as Char(10))),
+       octet_length('hola'),
+       octet_length(cast('hola' as varChar(10))),
+       octet_length(cast('hola' as Char(10))),
+       octet_length('niño'),
+        octet_length(cast('niño' as varChar(10))),
+       octet_length(cast('niño' as Char(10)))
+from RDB$DATABASE;
+select octet_length('cabaña')-char_length('cabaña')
+from RDB$DATABASE;
+/*en el FR no funciona,hay que tener en cuenta que octet_length va a tener 1 mas que
+el char lenght por los caracteres especiales*/
+/*contar los caracteres no basicos ascii*/
+
+/*funciones hash*/
+select hash('1234'),
+       hash('0123')
+    from RDB$DATABASE;
+    
+/*sacar los 3 primeros caracteres y los 3 ultimos del nombre del cliente*/
+select nombre,left(nombre,3), right(nombre,3)
+from CLIENTES;    
+
+/*simular substring que saca entre dos posiciones con left y rigt
+para sacar en la 2 y la 4 letra del nombre*/
+select nombre,right(left(nombre,4),3)
+from clientes;
+
+/*lower and upper*/
+select nombre, upper(nombre),
+       lower(nombre)
+from CLIENTES;
+
+/*sacar los nombres de clientes que contengan una l*/
+select nombre
+from CLIENTES where nombre like '%l%' or nombre like '%L%';
+
+/*rpad rellenar el nombre con * hasta 20 letras*/
+select nombre,
+       rpad (nombre,20,'*'),
+       lpad (nombre,20,'*'),
+       rpad (nombre,20,'+-'),
+       rpad (nombre,6,'*')
+from CLIENTES;
+
+/*prueba de overla en la cacena +++ sustituimos de 4 a la 3 por ------**/
+select overlay('+++++++++++++++++++++++++++++++'placing '----' from 3)
+from RDB$DATABASE;
+
+/*prueba de position buscar la cadena en la frase consolas con HDMI*/
+select position ('con' in 'consolas con HDM1'),
+       position ('con','consolas con HDM1')+1
+from RDB$DATABASE;
+
+/*BUSCAR la en los nombres de la primera y segunda*/
+select nombre,
+       position('e',LOWER(nombre)),
+       position('e',LOWER(NOMBRE)),
+       position('e',lower(nombre))+1
+from CLIENTES;
+
+/*cambiar la e por la E*/
+select nombre,
+       replace(nombre,'e','E')
+from clientes;
+
+/*ejemplo de palindromo*/
+select
+        reverse('arroz zorra'),
+       'arroz zorra' = reverse('arroz zorra')
+from RDB$DATABASE;
+
+/*comprobar capicuo*/
+select 212,
+cast(212 as varchar(10)),
+212=reverse (cast(212 as varchar(10)))
+
+from RDB$DATABASE;
+
+/*substring*/
+select nombre,
+        substring(nombre from 2 for 3)
+from CLIENTES;
+
+/*tim basico*/
+select trim('        hola      '),
+        character_length('     hola      ')
+from RDB$DATABASE;        
+
+/*select ASCII_CHAR(73),
+       ASCII_VAL ('I'),
+       ASCII_VAL('Ñ'),
+       ascii_char(209)
+        FROM RDB$DATABASE;*/
+
+/*SELECT char_length('hola'),
+       char_length (cast('hola' as char(10))),
+       char_length (cast('hola' as varchar(10))),
+       octet_length ('hola'),
+       octet_length (cast('hola' as char(10))),
+       octet_length (cast('hola' as varchar(10))),
+       octet_length ('niño'),
+       octet_length (cast('niño' as char(10))),
+       octet_length (cast('niño' as varchar(10)))
+       
+        from RDB$DATABASE;*/
+select octet_length('cabaña') - char_length('cabaña')
+from RDB$DATABASE;
+/*Tener en cuenta que en FlameRobin esta mal, octet_length va a tener uno más que char_length
+para averiguar cuantos valores especiales hay: octet_length-char_length*/
+/*funciones hash para contraseña*/
+select hash('holamibro'),
+       hash ('1234')
+    from RDB$DATABASE;
+/*Sacar los tres primeros caracteres y tres ultimos del nombre del cliente*/
+select nombre, left(nombre, 3), right(nombre, 3)
+    from CLIENTES;
+    
+select nombre,
+right(left(nombre, 4), 3)
+from CLIENTES;
+
+select nombre, lower(nombre), upper(nombre)
+    from CLIENTES;
+    
+select nombre
+    from CLIENTES
+        where lower(nombre) like '%l%';
+        
+select nombre, rpad (nombre, 20, '*'),
+       lpad (nombre, 20, '*'),
+       rpad (nombre, 20, '+-'),
+       rpad (nombre, 6, '*')
+    from CLIENTES;
+
+/*en la cadena++++++++++ sustituimos de 3 a la 6*/
+select overlay('++++++++++' placing '----' from 3)
+    from RDB$DATABASE;
+select nombre,
+       position('e', lower(nombre)),
+       position('e', lower(nombre),
+       position('e', lower(nombre))+1)
+        from CLIENTES;
+        
+/*Cambiar la e por E*/
+
+select nombre, replace(nombre, 'e', 'E'),
+               replace(nombre, 'ar', '-'),
+               replace(nombre, 'ar', 'ararar')
+    from CLIENTES;
+
+/*Reverse, palindromo*/
+select 'arroz zorra', reverse('arroz zorra'),
+                       'arroz zorra'=reverse('arroz zorra'),
+                       'Enrique'=reverse('arroz zorra')
+                       from RDB$DATABASE;
+                       
+select 212,
+       reverse(cast(212 as varchar(10))),
+       212=reverse(cast(212 as varchar(10)))
+        from RDB$DATABASE;
+    
+/*substring anterior del caracter 2 a 5 en los nombres*/→Sirve para mostrar los caracteres entre el rango dado, en este caso desde el caracter 2, mostrar tres caracteres
+select nombre,
+       substring(nombre from 2 for 3)
+        from CLIENTES;
+    
+/*trim basico*/
+select trim('      hola       '),
+       char_length('      hola     '),
+       trim(trailing'      hola       '),
+       trim(leading'      hola       ')
+        from RDB$DATABASE;
+
+
+    /*Calcular la feha el año antes y año despues*/
+select current_date,
+       current_date+3654,
+       dateadd(year, 1, current_date)UnAnoDespues,
+       dateadd(year, -1, current_date)UnAnoAntes
+        from RDB$DATABASE;
+       
+    /*Alumnos mayor de edad, con dateaad*/
+    
+select dateadd(year, -18, current_date),
+    cast('2011-02-24' as date)< dateadd(year, -18, current_date),
+    cast('2001-02-24' as date)< dateadd(year, -18, current_date)
+    from RDB$DATABASE;
+    
+    /*Queremos saber los pedidos que estan entre la fecha de hoy y de aquí a un mes*/
+select *
+FROM PEDIDOS
+where between current_date and dateadd(month, 1, current_date);
+
+
+/*Suma de 100 semanas*/
+select dateadd(week, 100, current_date)
+    from RDB$DATABASE;
+    
+ /*Comparar que una maticula antigua empieza por PRO MA SE CO*/   
+ select 'M1234' similar to 'MA|SE|CO%',
+        'MA1234' similar to '(MA|SE|CO)%'
+    from rdb$database;
