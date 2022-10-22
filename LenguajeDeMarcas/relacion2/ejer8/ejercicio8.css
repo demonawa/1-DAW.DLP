@@ -1,0 +1,58 @@
+body{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    font-size: 15px;
+}
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    
+    border: 1px black solid;
+    border-collapse:collapse; border: none;
+}
+td{
+    padding: 0;
+}
+td,th {
+    border: 1px  solid black;
+     text-align: center;
+     padding: 0 auto;
+    background-color: lightgray;
+    
+ 
+}
+ th {
+     color:black;
+     width: 100px;
+ }
+td.Horas{
+    color: black;
+    font-weight: bolder;
+    width: 100px;
+}
+td.PROG{
+    background-color: lightyellow;
+    font-weight: bolder;
+}
+td.SIM{
+    background-color: lightblue;
+    font-weight: bolder;
+}
+td.FOL{
+    background-color: lightsalmon;
+    font-weight: bolder;
+}
+td.BDD{
+    background-color: yellow;
+    font-weight: bolder;
+}
+td.LDM{
+    background-color: lightgreen;
+    font-weight: bolder;
+}
+td.EDD{
+    background-color: red;
+    font-weight: bolder;
+}
