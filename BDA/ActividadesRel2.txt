@@ -1,0 +1,445 @@
+/*.1 Muestra cual es la fecha actual, la hora actual, la fecha-hora actual, el numero de la transacción
+con la que trabajamos, el usuario con el que estoy conectado y el role con el que estoy
+conectado.*/
+select current_date, current_time,current_transaction,
+current_user,current_role 
+from RDB$DATABASE;
+
+/*2. Muestra los datos del ejercicio 1 mostrando tantas filas como tenga la tabla libros.*/
+select current_date, current_time,current_transaction,
+current_user,current_role 
+from LIBROS;
+
+/*3. Muestra los datos del ejercicio 1 renombrando las columnas correctamente*/
+select current_date as fecha_actual, current_time as hora_actual,current_transaction as numero_transacciones,
+current_user as usuario_actual,current_role as usuario_actual
+from RDB$DATABASE;
+
+/*4. Muestra los datos del ejercicio 1 mostrando tantas filas como tengas en libros con precio menor
+de 4 €.*/
+select current_date, current_time,current_transaction,
+current_user,current_role,precio
+from LIBROS where precio <4 ;
+
+
+/*5Muestra el id_libro, la cadena ‘hola’, el precio del libro con un 10% de iva, el dia actual, el
+titulo del libro para todos los libros con fecha_lanzamiento posterior al 1 de enero de 2020 y
+que sin fecha_cierre.*/
+select ID_LIBRO,FECHA_LANZAMIENTO,FECHA_CIERRE,PRECIO*1.1 as precio10, 
+CURRENT_DATE,TITULO
+FROM LIBROS WHERE FECHA_LANZAMIENTO > '2020-01-01'
+and fecha_cierre is null;
+
+
+/*6. Muestra la fecha actual de dos formas, la hora actual de dos formas distintas, el día de ayer, el
+dia/hora actual de dos formas distintas y el usuario conectado*/
+select current_Date,current_time,current_user,current_date -1 as ayer,
+cast ('NOW' as TIMESTAMP) fecha_hora_actual
+from RDB$DATABASE;
+
+/*7. Muestra todos los campos de la tabla clientes, la fecha actual ye el mensaje ‘Seleccionados’ para
+clientes de que viven en Archidona.*/
+select clientes.*,current_Date as fecha_actual,'seleccionados'
+from CLIENTES where poblacion = 'Archidona';
+
+/*8. Muestra todos los campos de la tabla libros y la fecha-hora actual para libros con precio menor
+que 5 renombrando la tabla como libros_baratos*/
+select ID_LIBRO,ID_EDITORIAL,TITULO,AUTOR,PRECIO,FECHA_LANZAMIENTO,FECHA_CIERRE,current_timestamp as fecha_hora
+from LIBROS as LIBROS_BARATOS where precio <5;
+
+/*9. Muestra los números 900, 90000, 90000000, 900000000000, en sentencias diferentes como:
+• smallinteger
+• integer
+• bigint.*/
+select cast (900 as integer) as entero1,
+cast (90000 as integer) as entero2,
+cast (90000000 as integer) as entero3
+/*cast (9000000000000 as integer) as entero los enteros no pueden reprensentar un numero tan grande  */
+from RDB$DATABASE;
+
+select cast (900 as smallint) as pentero1 /*solo puede representar este*/
+/*cast (90000 as smallint) as pentero2*/
+/*cast (90000000 as smallint) as pentero3*/
+/*cast (9000000000000 as smallint) as pentero4*/
+from RDB$DATABASE;
+
+select cast (900 as bigint) as pentero1,
+cast (90000 as bigint) as pentero2,
+cast (90000000 as bigint) as pentero3,
+cast (9000000000000 as bigint) as pentero4
+from RDB$DATABASE;
+/*Puede reprensentarlos todos*/
+
+
+/*10. Muestra los números 344.5, 13454.56789, 415234.6678 como float, double, numeric (con 2
+decimales)*/
+/*Para que en float y doble tenga 2 decimales tengo que hacerle un cast a numeric
+y así pornerle los decimales que me pida*/
+select cast (344.5 as float)
+cast (1345.56789 as float),
+cast (415234.6678 as float)
+from RDB$DATABASE;
+
+/*puede representarlos todos*/
+
+select cast (344.5 as double precision),
+cast (1345.56789 as double precision),
+cast (415234.6678 as double precision)
+from RDB$DATABASE;
+
+select cast (344.5 as numeric(5,2)),
+cast (1345.56789 as numeric(5,2))
+/*cast (415234.6678 as numeric(5,2))*/
+from RDB$DATABASE;
+
+/*11. Muestra los números(sentencias diferentes):
+• 1234.56789 decimal (6,2)
+• 1234.56789 decimal (5,2)
+• 1234.56789 numeric (6,2)
+• 1234.56789 numeric (5,2)*/
+select
+cast(1234.56789 as decimal (6,2)),
+cast(1234.56789 as decimal (5,2))
+from rdb$database;
+
+select
+cast(1234.56789 as numeric (6,2)),
+cast(1234.56789 as numeric (5,2))
+from rdb$database;
+
+/*12. Muestra el día de hoy (de 2 formas distintas), el día de ayer (de dos formas distintas), el 22 de
+noviembre de 2022 (a partir de dos literales distintos).*/
+select current_date as hoy1,
+cast ('TODAY' as date) as hoy2,
+cast ('yesterday' as date) as ayer,
+current_date -1 as ayer2,
+cast ('2022-11-22' as date) as noviembre22
+from RDB$DATABASE;
+
+/*13. Muestra para las fechas ‘15/5/2007’ y ‘3/8/2022’, el día, el mes, el año, el día del año, el día de
+la semana.*/
+select 'Dia: ' || extract(day from cast('2007-05-15'as Date)) ||
+       'Mes: ' || extract(month from cast('2007-05-15'as Date)) ||
+       'Año: ' || extract(year from cast('2007-05-15'as Date)) ||
+       'DiaSemana : ' || extract(weekday from cast('2007-05-15'as Date))||
+       'Dia: ' || extract(day from cast('2022-08-3'as Date)) ||
+       'Mes: ' || extract(month from cast('202-08-3'as Date)) ||
+       'Año: ' || extract(year from cast('2022-08-3'as Date)) ||
+       'DiaSemana : ' || extract(weekday from cast('2022-08-3'as Date))
+from RDB$DATABASE;
+
+/*14. Muestra para la hora actual y la hora ’12:34:57’, la hora, los minutos y los segundos de forma
+montando la por partes.*/
+select extract (hour from current_time) || 'h '||
+extract (minute from current_time) ||''' '||
+extract (second from current_time) ||''''''||
+
+extract (hour from cast('12:34:57' as time)) || 'h '||
+extract (minute from cast('12:34:57' as time)) ||''' '||
+extract (second from cast('12:34:57' as time))||''''''
+
+
+from RDB$DATABASE;
+
+
+
+/*15. Calcula el número de días que llevamos desde principio de curso.*/
+
+select (current_date) - cast ('09-15-2022'as date )
+from RDB$DATABASE;
+
+
+/*16. Muestra cuantos meses, años, días, horas 
+y minutos van entre ahora y ‘01/10/2022 00:00:00’*/
+
+select DATEDIFF(MONTH,CAST ('2022-10-01 00:00:00'as timestamp),CURRENT_TIMESTAMP) as meses; /*
+Lo mismo para años,dias,horas,minutos,segundos*/
+from RDB$DATABASE;
+
+/*17. Muestra la fecha, el día y el mes correspondientes a: sumar al día de hoy 60 días, sumar al día
+de hoy 14 semanas, restarle tres meses, restar a la fecha ‘12/03/2021’ 17 años.*/
+
+
+
+/*18. Hacer el ejercicio anterior sin usar funciones de fecha que automáticamente resten o sumen esos
+valores.*/
+
+select current_date + 60 as masdias,
+       current_date + 98 as dosmesesmesm
+        cast (EXTRACT(year from current_date) || '-'||
+             (EXTRACT(month from current_date)-3) || '-'||
+             (EXTRACT(day from current_date)-3) || '-'||
+from rdb$database;
+/*Don Enrique dijo que este ejercicio no era del todo necesario, ya que dice que ya tenemos una idea de como se hace, mentira xD*/
+
+/*19. Muestra un número aleatorio, un número aleatorio entre 0 y 100, un número aleatorio entre 19 y
+84.*/
+
+select round(RAND()*100) as numero_aleatorio_entre0_100
+from RDB$DATABASE;
+
+/*La forma más correcta*/
+select mod(round(RAND()*21733),101) as numero_aleatorio_entre0_100
+from RDB$DATABASE;
+
+select mod(round(RAND()*21733),84-19+1)+19 as numero_aleatorio_entre19_84
+from RDB$DATABASE;
+
+/*20. Muestra el valor de PI, el redondeo a entero del número 123,6345 (hacia arriba, hacia abajo y el
+más cercano), trunca el numero 123,6345 a dos cifras decimales y a entero, redondea a 3 cifras
+decimales el numero 123,6345*/
+
+select
+PI(),
+round (123.6345),
+ceil (123.6345),
+ceil (123.6345*1000)/1000.00,
+floor (123.6345),
+floor (123.6345*1000)/1000.00,
+trunc (123.6345,2),
+trunc (123.6345,0),
+round (123.6345,3)
+from RDB$DATABASE;
+
+/*21. Muestra el seno, coseno y tangente de 12 grados, la raíz cuadrada de 1325, el logaritmo en base
+10 de 2000, 3 elevado a 4, el menor valor de -22,-65,23,56, el signo del número -234, el resto
+entero de la división entera 123233 entre 2334. El resto entre dividir 123.45 y 19.23.*/
+
+select cos(12.000/360.00 * 2 * PI ()) as coseno, /*Está en radianes por lo tanto hay que cambiarlo a grados*/
+sin(12.000 /360.00* 2 * PI ()) as seno,
+tan(12.000 /360.00* 2 * PI ()) as tangente
+from RDB$DATABASE;
+
+
+select sqrt(1325) as raizCuadrada
+from RDB$DATABASE;
+
+select log10(2000) as logaritmo
+from rdb$database
+
+select power(3,4) as potencia
+from rdb$database;
+
+select minvalue(-22,-65,23,56) as minimo
+from rdb$database;
+
+select sign(-234) as signo
+from rdb$database;
+
+select MOD(123233,2334) as resto
+from rdb$database;
+
+select MOD(123.45,19.23) as resto2
+from rdb$database;
+
+/*22. Muestra la cadena –prueba-, donde cadena tiene 15 caracteres como cadena de longitud fija y
+como cadena de longitud variable. Una vez hecho añádele la cadena ‘FIN’ al final.*/
+
+select cast('-prueba-' as char(15)) as cadenafija,
+	cast('-prueba-' as varchar(15)) as cadenadin,
+	cast('-prueba-FIN' as char(15)) as cadenafija,
+	cast('-prueba-FIN' as varchar(15)) as cadenadin
+from rdb$database;
+
+/*23. Muestra el número de caracteres y el número de bytes de la cadena ‘El niño no es cabezón’ si se
+usa el conjunto de caracteres ISO8859-1 y el UTF-8.*/
+
+select character_length(cast('El niño no es cabezón' as char(25)character set ISO8859_1)),
+        character_length(cast('El niño no es cabezón' as varchar(25)character set ISO8859_1)),
+        octet_length(cast('El niño no es cabezón' as char(25)character set ISO8859_1)),
+         octet_length(cast('El niño no es cabezón' as varchar(25)character set ISO8859_1)),
+	       char_length(cast('El niño no es cabezón'as char (25))),
+        octet_length(cast('El niño no es cabezón'as char (25))),
+       char_length(cast('El niño no es cabezón'as varchar (25))),
+       octet_length(cast('El niño no es cabezón'as varchar (25)))
+        
+from rdb$database;
+
+/*24. Muestra una cadena de 6 caracteres. Los caracteres deben ser aleatorios entre el código 65 (A) y
+el 90 (Z).*/
+
+SELECT ASCII_CHAR(FLOOR(RAND()*(90-65)+65))||ASCII_CHAR(FLOOR(RAND()*(90-65)+65))||
+         ASCII_CHAR(FLOOR(RAND()*(90-65)+65))||ASCII_CHAR(FLOOR(RAND()*(90-65)+65))||
+         ASCII_CHAR(FLOOR(RAND()*(90-65)+65))||ASCII_CHAR(FLOOR(RAND()*(90-65)+65))
+      from RDB$DATABASE;
+      
+/*Ejercicio25. Muestra para la cadena ‘Vamos a trabajar’, los primeros 6 caracteres, los últimos 9 caracteres, el
+resultado de añadir el carácter ‘*‘ al final para que la cadena sea de 40 caracteres, la posición de
+‘tra’, la cadena resultante de sustituir ‘ba’ por ‘BA’, la cadena en mayúscula, la cadena en
+minúscula, las caracteres que van desde la posición 5 a la 10*/
+ 
+select 'Vamos a trabajar' as cadena,
+       left('Vamos a trabajar',6),
+       right('Vamos a trabajar',9),
+       rpad('Vamos a trabajar',24, '*'),
+       replace('Vamos a trabajar','ba', 'BA'),
+       upper('Vamos a trabajar'), 
+       lower('Vamos a trabajar'),
+       right(left('Vamos a trabajar',10),5)
+       
+            from RDB$DATABASE;
+            
+  /*Otra forma*/
+  
+  
+SELECT LEFT('Vamos a trabajar', 6), ---primeros 6 caracteres
+	   RIGHT('Vamos a trabajar', 9), ---ultimos 9 caracteres
+       RPAD('Vamos a trabajar', 40, '*'), ---añadir asteriscos al final hasta completar 40 caracteres
+       POSITION('tra' in 'Vamos a trabajar'), --- posicion de 'tra'
+       REPLACE('Vamos a trabajar', 'ba', 'BA'), --sustituir ‘ba’ por ‘BA’
+       UPPER('Vamos a trabajar'), ---la cadena en mayúscula
+       LOWER('Vamos a trabajar'), ---la cadena en minuscula
+	   SUBSTRING('Vamos a trabajar' from 5 for 6)---caracteres que van desde la posición 5 a la 10
+    from RDB$DATABASE;
+
+/*Ejercicio26. Muestra los valores correspondientes a la tabla de verdad de las operaciones and y or, si 7 es
+mayor de 5 con 4 es menor o igual a 20. Separadas las expresiones y juntas.*/
+select (7<5) and (4<=20),
+       (7<5) or (4<=20),
+       (7<5) AND (4<=20) AND (7>5) OR (4<=20),
+       (7<5) AND (4<=20) OR (7>5) OR (4<=20),
+       ((7<5) AND (4<=20)) AND ((7>5) OR (4<=20))
+from RDB$DATABASE;
+
+/*Ejercicio27. 27.	Listando la tabla pedidos muestra:
+•	año pedido
+•	mes pedido
+•	dia pedido
+•	dia semana pedido
+•	descripcion
+•	gastos de envio a 0 si son nulos
+•	gastos totales que son los de envio + importe
+*/
+
+select extract(year from fecha) as anno,
+       extract(month from fecha) as mes,
+       extract(day from fecha) as dia,
+       case(extract(weekday from fecha))
+       when 0 then 'Domingo'
+       when 1 then 'Lunes'
+       when 2 then 'Martes'
+       when 3 then 'Miercoles'
+       when 4 then 'Jueves'
+       when 5 then 'Viernes'
+       when 6 then 'Sabado'
+       end dia_semana,
+       coalesce(gastos_envio,0) as gastos_envio,
+       importe+coalesce(gastos_envio, 0) as importe_total
+from PEDIDOS;
+
+/*28. 28.	Muestra id_libro, titulo, editorial de libro. Además el texto ‘regalo’ si vale 0,  ‘barato’ si vale menos de 6€,
+‘normal’ entre [6€ y 100€] y ‘caro’ si vale más de 100€.  Hazlo usando case (de   dos formas distintas), case,  iif.*/
+
+select id_libro,
+       titulo,
+       id_editorial,
+       precio,
+       case (precio)
+       when precio =0 then 'regalo'
+       when precio <6 then 'barato'
+       when precio <100 then 'normal'
+       when precio >100 then 'caro'
+       end opinion
+            from LIBROS;
+select id_libro,
+       titulo,
+       id_editorial,
+       precio,
+       iif(precio=0, 'regalo', iif(precio<6, 'barato', iif(precio<100, 'normal', 'caro')))as valoracion
+from LIBROS;
+
+/*29. 29.	Muestra el id_cliente, nombre y direccion de todos los clientes, de forma que si telefono es null muestre ‘no tiene’.
+ Hazlo de todas las formas posibles.*/
+select ID_CLIENTE,
+       nombre,
+       direccion,
+       coalesce(telefono,'no tiene'),
+       iif(telefono is null, 'no tiene', telefono)
+            from clientes;
+/*Ejercicio30. 30.	Muestra el id_pedido, fecha y un campo actualidad que valdrá:
+•	‘antiguo’ para los anteriores al 2015,  ‘
+•	‘almacenado’ para los anteriores al 2022
+•	‘actuales’ para los del año en curso.
+*/
+
+/*Actividades de Enrique*/
+
+select id_pedido,
+       fecha,
+       iif(extract(year from fecha)<2015, 'antiguo', iif(extract(year from fecha)<2022, 'almacenado', 'actuales'))
+        from PEDIDOS;
+
+/*numeros de telefono de 3 en 3 from clientes*/
+select telefono,
+       SUBSTRING(telefono from 1 for 3) || '-' 
+       SUBSTRING(telefono from 4 for 3) || '-' 
+       SUBSTRING(telefono from 7 for 3) 
+from CLIENTES
+where telefono similar to '[0-9]{9}'
+
+/*Las direcciones correctas empiezan por C/ Av/ Carr/ y Urb/ seguidas de cualquier
+       cosa. Mostrar los clientes que tienen direcciones correctas*/
+       
+select *
+    from CLIENTES
+        where direccion similar to '(C/|Av/|Carr/|Urb)%’;
+        
+ 
+/*Los códigos de barras de las placas base llevan:
+         9 cifras numéricas
+        X caracteres
+        (99)99999999(99)SN99999999
+        Sacar la expresión regular correspondiente.*/
+select '999999999' similar to '[A-Z]''[0-9]{9}',
+       'SN999999999' similar to '[A-Z]{0-9}''[0-9]{9}'
+            from RDB$DATABASE;
+            
+
+/*Supongamos que el código postal es caracter y 5 cifras. Expresión regular
+      correspondiente*/
+      
+select 'X23456' similar to '[A-Z]''[0-9]{5}' as bien,
+       '223456' similar to '[A-Z]''[0-9]{5}' as mal,
+       'X234H6' similar to '[A-Z]''[0-9]{5}' as maltmb
+            from RDB$DATABASE;
+        
+select distinct importe
+from pedidos;
+
+select first 3  *
+from pedidos;
+
+select first 6 skip 3  *
+from pedidos;
+
+select *
+    from PEDIDOS
+        rows 3;
+        
+
+select *
+    from PEDIDOS
+        rows 4 to 9;
+        
+
+select p.FECHA
+    from pedidos as p;
+    
+
+select*
+from PEDIDOS, CLIENTES
+
+
+/*Antiguado*/
+select id_pedido, PEDIDOS.ID_CLIENTE, nombre, direccion, FECHA, importe
+from PEDIDOS, CLIENTES
+where clientes.ID_CLIENTE=PEDIDOS.ID_CLIENTE;
+
+select p.id_pedido, p.id_cliente, c.nombre, c.direccion, p.fecha, p.importe
+from PEDIDOS as p
+inner join clientes c using (ID_CLIENTE);
+
+
+select p.id_pedido, p.fecha, l.id_libro, l.titulo, l.autor
+    from PEDIDOS as p
+        inner join LIBROS l using (ID_LIBRO);        
