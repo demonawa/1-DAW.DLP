@@ -1,0 +1,76 @@
+/*HECHO CON WINRDBI, sirve como repaso para álgebra de SQL*/
+
+%1provincias;
+%2clientes;
+%3cli:=clientes;
+%4prov:=provincias;
+%5clientes2(numero_cliente,nombre,poblacion,id_provincia):=clientes;
+%6sedes2(nombre_sede, id_sede, poblacion, id_provincia)(sedes);
+%6project nombre, id_sede, poblacion, id_provincia(sedes2);
+
+%proyeccion
+
+%7project id_cliente (clientes);
+%8project poblacion (sedes);
+%9project id_provincia (sedes);
+%10project id_cliente,  id_sede (llamadas);
+%11project nombre, poblacion, id_cliente (clientes);
+%12sedes3(id_sede,nombre_sede,poblacion_sede,id_provincia):=sedes;
+%12project nombre_sede (sedes3);
+%13llamadas2(id_llamada, codo, id_cliente, minutos_facturar):=llamadas;
+%13project codo, minutos_facturar (llamadas2);
+
+%seleccion
+
+%14select(poblacion = 'Antequera') (sedes);
+%14select(poblacion = 'Antequera') (clientes);
+%15select(id_cliente < 4) (clientes);
+%16select(poblacion = 'Antequera' and id_sede>=2 and id_sede <=3) (sedes);
+%17select(minutos >=5) (llamadas);
+%18select(minutos >5 and(id_llamada>=3 and id_llamada<=5))(llamadas);
+%19select(id_sede = 1 and minutos  < 10) (llamadas);
+%20llamadas3(id_llamada, id_sede, id_cliente, importe_minutos):=llamadas;
+%20select(id_llamada < 4 ) (llamadas3);
+
+%21. Muestra sólo el nombre de los clientes con id_cliente menor que 3 y mayor que 0.
+%seleccion:=select (id_cliente > 0 and id_cliente <3)(clientes);
+%ejercicio21:= project nombre(seleccion);
+
+%22. Muestra el nombre y población de las sedes cuyo id es mayor de 2.
+%seleccion:= select (id_sede >2) (sedes);
+%ejercicio22:= project poblacion (seleccion);
+
+%23. Muestra el nombre y población de las sedes que son de Antequera o Loja.
+%seleccion:= select (poblacion = 'Antequera' or poblacion ='Loja1') (sedes);
+%ejercicio23:= project poblacion (seleccion);
+
+%24. Muestra el nombre de las sedes que son de de id_provincia igual a 2 o de Antequera y cuyo id es menor de 3
+%seleccion:=select (id_provincia = 2 or (poblacion='Antequera' and id_sede < 3 )) (sedes);
+%ejercicio24:= project nombre (seleccion);
+
+%25. Muestra la población de las sedes (cambia el nombre del campo a pob_sede) que son de Archidona  y su nombre comienza por ‘A’ mayúscula
+%seleccion:= select(nombre >= 'A'  and nombre <'B') (sedes);
+%ejercicio25(pob_sede):=project nombre (seleccion);
+
+%PRODUCTO CARTESIANO
+clientes1(id_cliente,nombre_cliente,poblacion_cliente,id_provincia_clientes):=clientes;
+sedes1(id_sede,nombre_sede,poblacion_sede,id_provincia_sedes):=sedes;
+%26. Mostrar todos los datos sedes y clientes para todas las posibles combinaciones sedes y personas.
+
+producto:= clientes1 product sedes1;
+ejercicio26:= select (id_cliente<> id_sede)(producto);
+
+%27. Mostrar el nombre de sedes y clientes de todas las posibles combinaciones de sedes y clientes.
+ejercicio27:= project nombre_sede, nombre_cliente (ejercicio26);
+
+%Para los siguientes ejercicios, será necesario construir un clientes1 y sedes1 particular que nos permita, mostrar.
+
+%28. Todas las combinaciones de nombre clientes y sede que estén en la misma poblacion.
+%ejercicio28a:= clientes1 product sedes1;
+%ejercicio28b:= select (poblacion_cliente = poblacion_sede)(ejercicio28a);
+%ejercicio28c:= project nombre_cliente,nombre_sede, poblacion_cliente(ejercicio28b);
+
+%29. Todas las combinaciones de nombre clientes y sede que estén en la misma provincia.
+%ejercicio29a:= clientes1 product sedes1;
+%ejercicio29b:= select (id_provincia_clientes = id_provincia_sedes)(ejercicio29a);
+%ejercicio29c:= project nombre_cliente,nombre_sede, poblacion_cliente(ejercicio29b);
