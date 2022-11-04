@@ -1,0 +1,31 @@
+body{
+    background-color: #2D8652;
+    font-size: 15px;
+    text-transform: none;
+    
+}
+
+h1{
+    text-transform: capitalize;
+}
+p.blanco{
+    color: white;
+    font-family: serif;
+    font-style: italic;
+
+}
+
+p.amarillo{
+    color: yellow;
+    font-family: sans-serif;
+}
+
+p.naranja{
+    color: orange;
+    font-family: monospace;
+}
+
+p.rojo{
+    color: red;
+    font-family: cursive;
+}
