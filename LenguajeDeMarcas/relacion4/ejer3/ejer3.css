@@ -1,0 +1,32 @@
+body{
+    background-color: lightgray;
+    text-align: center;
+    font-family: sans-serif;
+   text-align: justify;
+   margin: 10px 10%;
+   letter-spacing: 3%;
+}
+
+h1{
+    color: black;
+    text-align: center;
+}
+
+h2{
+    background-color: gray;
+    color: white;
+}
+p{}
+
+i{
+    color: orangered;
+}
+
+strong{
+    background-color: white;
+}
+img{
+    float: left;
+    width: 75px;
+
+}
