@@ -334,10 +334,10 @@ select id_libro,
        titulo,
        id_editorial,
        precio,
-       case (precio)
+       case
        when precio =0 then 'regalo'
        when precio <6 then 'barato'
-       when precio <100 then 'normal'
+       when precio <=100 then 'normal'
        when precio >100 then 'caro'
        end opinion
             from LIBROS;
@@ -345,7 +345,8 @@ select id_libro,
        titulo,
        id_editorial,
        precio,
-       iif(precio=0, 'regalo', iif(precio<6, 'barato', iif(precio<100, 'normal', 'caro')))as valoracion
+       iif(precio=0, 'regalo', iif(precio<6, 'barato', 
+       iif(precio<=100, 'normal', 'caro')))as precios
 from LIBROS;
 
 /*29. 29.	Muestra el id_cliente, nombre y direccion de todos los clientes, de forma que si telefono es null muestre ‘no tiene’.
@@ -356,12 +357,16 @@ select ID_CLIENTE,
        coalesce(telefono,'no tiene'),
        iif(telefono is null, 'no tiene', telefono)
             from clientes;
+	    
 /*Ejercicio30. 30.	Muestra el id_pedido, fecha y un campo actualidad que valdrá:
 •	‘antiguo’ para los anteriores al 2015,  ‘
 •	‘almacenado’ para los anteriores al 2022
 •	‘actuales’ para los del año en curso.
 */
-
+select ID_PEDIDO,FECHA,
+	iif(extract(year from FECHA)<2015, 'antiguo',
+	iif(extract(year from FECHA)<2022,'almacenado','actuales'))
+from PEDIDOS;
 /*Actividades de Enrique*/
 
 select id_pedido,
@@ -372,10 +377,10 @@ select id_pedido,
 /*numeros de telefono de 3 en 3 from clientes*/
 select telefono,
        SUBSTRING(telefono from 1 for 3) || '-' 
-       SUBSTRING(telefono from 4 for 3) || '-' 
-       SUBSTRING(telefono from 7 for 3) 
+      || SUBSTRING(telefono from 4 for 3) || '-' 
+       || SUBSTRING(telefono from 7 for 3) 
 from CLIENTES
-where telefono similar to '[0-9]{9}'
+where telefono similar to '[0-9]{9}';
 
 /*Las direcciones correctas empiezan por C/ Av/ Carr/ y Urb/ seguidas de cualquier
        cosa. Mostrar los clientes que tienen direcciones correctas*/
